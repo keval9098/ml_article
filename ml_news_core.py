@@ -176,17 +176,58 @@ def similarNews(url):
     similarity_score, article_titles_old = similarity(url_list, article)
     dictionary = dict(zip(url_list, similarity_score))
     url_title_dict = dict(zip(url_list, article_titles))
+    
     sorted_d = dict( sorted(dictionary.items(), key=lambda item:item[1],reverse=True))
-    # for key in dictionary:
-    #     if dictionary[key] >
-    json_response = [{key:url_title_dict[key]} for key in sorted_d]
+    print(sorted_d)
+    for key in sorted_d.keys():
+        for index, row in df.iterrows():
+            if row[0] in key:
+                sorted_d[key] = row[1]
+
+    l=[]
+    c=[]
+    r=[]
+    
+    for key, value in sorted_d.items():
+        if value in ["L", "CL"]:
+            l.append({key:url_title_dict[key], "rating":value})
+        elif value in ["C"]:
+            c.append({key:url_title_dict[key], "rating":value})
+        elif value in ["R", "CR"]:
+            r.append({key:url_title_dict[key], "rating":value})
+
+    lun = [len(l), len(c), len(r)]
+    final = []
+
+    for i in range(max(lun)):
+        try:
+            final.append(l[i])
+        except:
+            pass
+        try:
+            final.append(c[i])
+        except:
+            pass
+        try:
+            final.append(r[i])
+        except:
+            pass
+
+
+    # json_response = [{key:url_title_dict[key], "rating":value} for key, value in sorted_d.items()]
+
+    # for item in json_response:
+    #     for index, row in df.iterrows():
+    #         if row[0] in item.key:
+    #             print(row[0], row[1])
+    # print(sorted_d)
     # # url_list = [{key:n_items[key]} for key in n_items]
     # url_list = [{key:article_titles[index]} for index,key in enumerate(sorted_d)]
     # dictionary = [{item,similarity_score[index]} for index,item in enumerate(url_list)]
     # print(dictionary)
     # print(url_title_dict)
     # print(json_response)
-    return json_response[0:3]
+    return final[0:3]
 
 
 
