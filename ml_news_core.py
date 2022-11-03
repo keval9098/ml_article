@@ -190,11 +190,11 @@ def similarNews(url):
     
     for key, value in sorted_d.items():
         if value in ["L", "CL"]:
-            l.append({key:url_title_dict[key], "rating":value})
+            l.append({key:url_title_dict[key]})
         elif value in ["C"]:
-            c.append({key:url_title_dict[key], "rating":value})
+            c.append({key:url_title_dict[key]})
         elif value in ["R", "CR"]:
-            r.append({key:url_title_dict[key], "rating":value})
+            r.append({key:url_title_dict[key]})
 
     lun = [len(l), len(c), len(r)]
     final = []
