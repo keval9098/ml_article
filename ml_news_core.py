@@ -173,12 +173,11 @@ def similarNews(url):
     prediction, article_title, article, url = handlelink(article_link=url)
     url_list, article_titles = duckduckgo_search(article_title)
     # similarity_score, avgScore = similarity(url_list, article)
-    similarity_score, article_titles_old = similarity(url_list, article)
+    similarity_score, article_titles_new = similarity(url_list, article)
     dictionary = dict(zip(url_list, similarity_score))
-    url_title_dict = dict(zip(url_list, article_titles))
+    url_title_dict = dict(zip(url_list, article_titles_new))
     
     sorted_d = dict( sorted(dictionary.items(), key=lambda item:item[1],reverse=True))
-    print(sorted_d)
     for key in sorted_d.keys():
         for index, row in df.iterrows():
             if row[0] in key:
